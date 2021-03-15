@@ -92,11 +92,11 @@ run c = do
 {- ORMOLU_DISABLE -}
 example1 =
   Assign "x" (Literal 1) `Seq`
-  IfNez (Variable "x" `Ge` (Literal 3))
+  IfNez (Variable "x" `Ge` Literal 3)
     (Print (Literal 0))
   -- else
     (
-      IfNez (Variable "x" `Ge` (Literal 2))
+      IfNez (Variable "x" `Ge` Literal 2)
         (Print (Literal 0))
         (Print (Literal 42))
     )

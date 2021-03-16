@@ -22,8 +22,6 @@ data AExp
     -- similarly to C coercion rules. This allows them to be used with IfNez
     -- easily / intuitively.
     Not AExp
-  | And AExp AExp
-  | Or AExp AExp
   | Eq AExp AExp
   | Ge AExp AExp
   -- we could easily add more like <=, >, <, !=
@@ -49,14 +47,6 @@ evaluateAExp env (Not n) =
   if evaluateAExp env n /= 0
     then 0
     else 1
-evaluateAExp env (And n m) =
-  if evaluateAExp env n /= 0 && evaluateAExp env m /= 0
-    then 1
-    else 0
-evaluateAExp env (Or n m) =
-  if evaluateAExp env n /= 0 || evaluateAExp env m /= 0
-    then 1
-    else 0
 evaluateAExp env (Eq n m) =
   if evaluateAExp env n == evaluateAExp env m
     then 1

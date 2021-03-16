@@ -1,0 +1,110 @@
+\documentclass[pdf,t]{beamer}
+
+\usepackage{listings}
+\usepackage{color}
+\usepackage{amsmath}
+\usepackage{qtree}
+
+\renewcommand\lstlistingname{Quelltext} % Change language of section name
+\lstset{% General setup for the package
+  language=Perl,
+  basicstyle=\small\sffamily,
+  numbers=left,
+  numberstyle=\tiny,
+  frame=tb,
+  tabsize=2,
+  columns=fixed,
+  showstringspaces=false,
+  showtabs=false,
+  keepspaces,
+  commentstyle=\color{red},
+  keywordstyle=\color{blue}
+}
+
+\mode<presentation>{}
+
+% The audience for this talk was a group of EIC software engineers/PMs at
+% Microsoft in P3 an EIC group within identity.
+\title{How to Implement a PL in $< 10 \text{min}$}
+\subtitle{Programming languages are cool!}
+\author{Devin Lehmacher}
+
+\begin{document}
+
+\begin{frame}
+  \titlepage{}
+\end{frame}
+
+\begin{frame}{Background}
+  \begin{itemize}
+    \item In addition to studying generally more useful computer science for
+      software engineering in college: like algorithms, databases, operating
+      systems, etc.
+    \item I spent a great deal of time studying Programming Language theory
+      (e.g.\ what makes a good programming language) and implementation (e.g.\
+      how is Rosalyn the C\# compiler written)
+    \item Language design opens possibilities
+    \item There are things that just aren't possible without writing a new
+      language
+  \end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{What Language?}
+  \begin{itemize}
+    \item<1-> Hint: we're not going to implement C\# in 10 minutes.
+    \item<2-> IMP (short for imperative), a very simple programming language
+\begin{verbatim}
+# Compute nth triangle number
+n := 5;
+i := n;
+result := 0;
+while i > 0 do (
+  result := result + i;
+  i := i - 1
+);
+print n
+\end{verbatim}
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Basics}
+  \begin{itemize}
+    \item<1->
+      For a typical interpreted programming language like Python or Javascript we have:
+      \begin{align*}
+        \text{Source Code} \xrightarrow{\text{Parser}} \text{AST} \xrightarrow{\text{Interpreter}} \text{Program Output}
+      \end{align*}
+    \item<2-> Only going to implement an interpreter; so we'll start with Abstract Syntax Trees (ASTs)
+    \item<2-> An expression like $1 + 2 * (1 + 2)$ would be represented as this AST:\\
+      \Tree [.{+} 1 [.{*} 2 [.{+} 1 2 ] ] ]
+    % at this point will want to overview Haskell + show the implementation of
+    % the calculator
+  \end{itemize}
+\end{frame}
+
+\begin{frame}{Printing + Basic Commands}
+\end{frame}
+
+\begin{frame}{Assignment}
+\end{frame}
+
+\begin{frame}{Conditionals}
+\end{frame}
+
+\begin{frame}{That's all!}
+  \begin{itemize}
+    \item<1-> A more complete implementation of this simple language including a
+      parser + repl can be found at https://github.com/lehmacdj/imp-lang. It is
+      a little bit ``better'' of an implementation too:
+      \begin{itemize}
+        \item It separates out booleans as a separate type from integers
+        \item It supports a fuller range of operations (e.g.\ all comparison
+          operators and boolean operators; more arithmetic operations)
+        \item It is purer (it doesn't use IORef + IO in the evaluator)
+      \end{itemize}
+    \item<2-> Questions? (hopefully I didn't go overtime)
+  \end{itemize}
+\end{frame}
+
+
+\end{document}

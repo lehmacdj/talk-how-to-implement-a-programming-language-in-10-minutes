@@ -1,0 +1,15 @@
+# general latex files
+*.pdf
+*.aux
+*.out
+*.log
+*.fls
+*.fdb_latexmk
+*.synctex
+*.synctex.gz
+
+# extensions used by beamer presentations?
+*.nav
+*.snm
+*.toc
+*.vrb

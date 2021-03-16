@@ -10,7 +10,6 @@ module Main where
 import Data.IORef
 import Data.Map (Map)
 import qualified Data.Map as Map
-import Data.Maybe (fromJust)
 
 data AExp
   = Literal Integer
@@ -21,11 +20,10 @@ data AExp
   | -- boolean operations consider numbers != 0 to be true and 0 to be false
     -- similarly to C coercion rules. This allows them to be used with IfNez
     -- easily / intuitively.
+    -- we could easily add more like &&, ||, <=, >, <, !=
     Not AExp
   | Eq AExp AExp
   | Ge AExp AExp
-  -- we could easily add more like <=, >, <, !=
-  deriving (Show, Eq)
 
 data Command
   = Print AExp

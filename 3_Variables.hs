@@ -10,7 +10,6 @@ module Main where
 import Data.IORef
 import Data.Map (Map)
 import qualified Data.Map as Map
-import Data.Maybe (fromJust)
 
 data AExp
   = Literal Integer
@@ -18,7 +17,6 @@ data AExp
   | Plus AExp AExp
   | Minus AExp AExp
   | Times AExp AExp
-  deriving (Show, Eq)
 
 data Command
   = Print AExp

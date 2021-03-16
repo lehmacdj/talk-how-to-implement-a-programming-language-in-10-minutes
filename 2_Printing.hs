@@ -11,7 +11,6 @@ data AExp
   | Plus AExp AExp
   | Minus AExp AExp
   | Times AExp AExp
-  deriving (Show, Eq)
 
 data Command
   = Print AExp

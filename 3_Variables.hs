@@ -19,10 +19,14 @@ data AExp
   | Times AExp AExp
 
 data Command
-  = Print AExp
-  | Seq Command Command
-  | NoOp
-  | Assign String AExp
+  = -- | print (1 + 1)
+    Print AExp
+  | -- | print 1; print 2
+    Seq Command Command
+  | -- | nop
+    NoOp
+  | -- | x := 1
+    Assign String AExp
 
 evaluateAExp :: Map String Integer -> AExp -> Integer
 evaluateAExp env (Literal n) = n

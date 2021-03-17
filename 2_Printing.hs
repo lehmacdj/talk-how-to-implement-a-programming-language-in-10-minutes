@@ -31,7 +31,7 @@ evaluate (Print n) = print (evaluateExpression n)
 evaluate (Seq p q) = do
   evaluate p
   evaluate q
-evaluate NoOp = pure ()
+evaluate NoOp = return ()
 
 example1 = Print (Literal 1 `Plus` Literal 1)
 

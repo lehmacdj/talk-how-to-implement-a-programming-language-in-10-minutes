@@ -42,7 +42,7 @@ evaluate env (Print n) = do
 evaluate env (Seq p q) = do
   evaluate env p
   evaluate env q
-evaluate env NoOp = pure ()
+evaluate env NoOp = return ()
 evaluate env (Assign x n) = do
   currentEnv <- readIORef env
   -- env[x] = evaluateExpression currentEnv n

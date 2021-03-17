@@ -20,14 +20,14 @@ data Command
   | -- | nop
     NoOp
 
-evaluateExpression :: Expression -> Integer
-evaluateExpression (Literal n) = n
-evaluateExpression (Plus n m) = evaluateExpression n + evaluateExpression m
-evaluateExpression (Minus n m) = evaluateExpression n - evaluateExpression m
-evaluateExpression (Times n m) = evaluateExpression n * evaluateExpression m
+evaluateExpr :: Expression -> Integer
+evaluateExpr (Literal n) = n
+evaluateExpr (Plus n m) = evaluateExpr n + evaluateExpr m
+evaluateExpr (Minus n m) = evaluateExpr n - evaluateExpr m
+evaluateExpr (Times n m) = evaluateExpr n * evaluateExpr m
 
 evaluate :: Command -> IO ()
-evaluate (Print n) = print (evaluateExpression n)
+evaluate (Print n) = print (evaluateExpr n)
 evaluate (Seq p q) = do
   evaluate p
   evaluate q

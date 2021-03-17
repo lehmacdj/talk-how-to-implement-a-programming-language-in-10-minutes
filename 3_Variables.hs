@@ -25,28 +25,28 @@ data Command
   | -- | x := 1
     Assign String Expression
 
-evaluateExpression :: Map String Integer -> Expression -> Integer
-evaluateExpression env (Literal n) = n
-evaluateExpression env (Variable x) =
+evaluateExpr :: Map String Integer -> Expression -> Integer
+evaluateExpr env (Literal n) = n
+evaluateExpr env (Variable x) =
   case Map.lookup x env of
     Just v -> v
     Nothing -> 0
-evaluateExpression env (Plus n m) = evaluateExpression env n + evaluateExpression env m
-evaluateExpression env (Minus n m) = evaluateExpression env n - evaluateExpression env m
-evaluateExpression env (Times n m) = evaluateExpression env n * evaluateExpression env m
+evaluateExpr env (Plus n m) = evaluateExpr env n + evaluateExpr env m
+evaluateExpr env (Minus n m) = evaluateExpr env n - evaluateExpr env m
+evaluateExpr env (Times n m) = evaluateExpr env n * evaluateExpr env m
 
 evaluate :: IORef (Map String Integer) -> Command -> IO ()
 evaluate env (Print n) = do
   currentEnv <- readIORef env
-  print (evaluateExpression currentEnv n)
+  print (evaluateExpr currentEnv n)
 evaluate env (Seq p q) = do
   evaluate env p
   evaluate env q
 evaluate env NoOp = return ()
 evaluate env (Assign x n) = do
   currentEnv <- readIORef env
-  -- env[x] = evaluateExpression currentEnv n
-  writeIORef env (Map.insert x (evaluateExpression currentEnv n) currentEnv)
+  -- env[x] = evaluateExpr currentEnv n
+  writeIORef env (Map.insert x (evaluateExpr currentEnv n) currentEnv)
 
 example1 = Print (Variable "x")
 

@@ -26,30 +26,30 @@ data Command
   | -- if 1 then print 2 else print 3
     IfNez Expression Command Command
 
-evaluateExpression :: Map String Integer -> Expression -> Integer
-evaluateExpression env (Literal n) = n
-evaluateExpression env (Variable x) =
+evaluateExpr :: Map String Integer -> Expression -> Integer
+evaluateExpr env (Literal n) = n
+evaluateExpr env (Variable x) =
   case Map.lookup x env of
     Just v -> v
     Nothing -> 0
-evaluateExpression env (Plus n m) = evaluateExpression env n + evaluateExpression env m
-evaluateExpression env (Minus n m) = evaluateExpression env n - evaluateExpression env m
-evaluateExpression env (Times n m) = evaluateExpression env n * evaluateExpression env m
+evaluateExpr env (Plus n m) = evaluateExpr env n + evaluateExpr env m
+evaluateExpr env (Minus n m) = evaluateExpr env n - evaluateExpr env m
+evaluateExpr env (Times n m) = evaluateExpr env n * evaluateExpr env m
 
 evaluate :: IORef (Map String Integer) -> Command -> IO ()
 evaluate env (Print n) = do
   currentEnv <- readIORef env
-  print (evaluateExpression currentEnv n)
+  print (evaluateExpr currentEnv n)
 evaluate env (Seq p q) = do
   evaluate env p
   evaluate env q
 evaluate env NoOp = return ()
 evaluate env (Assign x n) = do
   currentEnv <- readIORef env
-  writeIORef env (Map.insert x (evaluateExpression currentEnv n) currentEnv)
+  writeIORef env (Map.insert x (evaluateExpr currentEnv n) currentEnv)
 evaluate env (IfNez n p q) = do
   currentEnv <- readIORef env
-  let result = evaluateExpression currentEnv n
+  let result = evaluateExpr currentEnv n
   if result /= 0
     then evaluate env p
     else evaluate env q

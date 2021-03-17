@@ -48,9 +48,9 @@ evaluate env (Assign x n) = do
   -- env[x] = evaluateAExp currentEnv n
   writeIORef env (Map.insert x (evaluateAExp currentEnv n) currentEnv)
 
-example1 = Assign "x" (Literal 2) `Seq` Print (Variable "x")
+example1 = Print (Variable "x")
 
-example2 = Assign "x" (Literal 1 `Plus` Literal 1) `Seq` Print (Variable "x")
+example2 = Assign "x" (Literal 2) `Seq` Print (Variable "x")
 
 main :: IO ()
 main = do

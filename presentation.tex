@@ -85,12 +85,11 @@ print n
 \begin{frame}{Demo Outline}
   \begin{itemize}
     \item Printing + Basic command stuff
-      % TODO: add an example tree for the syntax of stuff
+      \Tree [.{Seq} [.{Print} 1 ] [.{Print} [.{+} 2 3 ] ] ]
     \item Assignment
     \item Conditionals (e.g.\ if)
-      % TODO: again add an example tree for AST purposes
+      \Tree [.{IfNez} 1 [.{Print} 42 ] [.{Print} 0 ] ]
     \item While
-      % TODO: add some details on unrolling while loop
   \end{itemize}
 \end{frame}
 

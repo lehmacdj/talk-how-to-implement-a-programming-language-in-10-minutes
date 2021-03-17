@@ -36,11 +36,8 @@ example2 = Print (Literal 4) `Seq` Print (Literal 2)
 
 example3 = NoOp
 
-example4 = NoOp `Seq` NoOp
-
 main :: IO ()
 main = do
   evaluate example1
   evaluate example2
   evaluate example3
-  evaluate example4

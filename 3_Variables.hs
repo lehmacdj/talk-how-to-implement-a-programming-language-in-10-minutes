@@ -19,12 +19,9 @@ data AExp
   | Times AExp AExp
 
 data Command
-  = -- | print (1 + 1)
-    Print AExp
-  | -- | print 1; print 2
-    Seq Command Command
-  | -- | nop
-    NoOp
+  = Print AExp
+  | Seq Command Command
+  | NoOp
   | -- | x := 1
     Assign String AExp
 
@@ -48,12 +45,8 @@ evaluate env (Seq p q) = do
 evaluate env NoOp = pure ()
 evaluate env (Assign x n) = do
   currentEnv <- readIORef env
+  -- env[x] = evaluateAExp currentEnv n
   writeIORef env (Map.insert x (evaluateAExp currentEnv n) currentEnv)
-
-run :: Command -> IO ()
-run c = do
-  startingEnv <- newIORef Map.empty
-  evaluate startingEnv c
 
 example1 = Assign "x" (Literal 2) `Seq` Print (Variable "x")
 
@@ -63,3 +56,8 @@ main :: IO ()
 main = do
   run example1
   run example2
+
+run :: Command -> IO ()
+run c = do
+  startingEnv <- newIORef Map.empty
+  evaluate startingEnv c

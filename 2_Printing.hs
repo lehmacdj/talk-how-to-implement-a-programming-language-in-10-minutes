@@ -13,9 +13,12 @@ data AExp
   | Times AExp AExp
 
 data Command
-  = Print AExp
-  | Seq Command Command
-  | NoOp
+  = -- | print (1 + 1)
+    Print AExp
+  | -- | print 1; print 2
+    Seq Command Command
+  | -- | nop
+    NoOp
 
 evaluateAExp :: AExp -> Integer
 evaluateAExp (Literal n) = n

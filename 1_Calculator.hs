@@ -20,7 +20,7 @@ evaluateAExp (Times n m) = evaluateAExp n * evaluateAExp m
 
 example1 = Literal 1 `Plus` (Literal 2 `Times` (Literal 3 `Plus` Literal 4))
 
-example2 = Plus (Literal 1) (Minus (Literal 1) (Literal 1))
+example2 = Plus (Literal 1) (Times (Literal 2) (Plus (Literal 3) (Literal 4)))
 
 main = do
   print (evaluateAExp example1)

@@ -33,9 +33,9 @@ evaluate (Seq p q) = do
   evaluate q
 evaluate NoOp = return ()
 
-example1 = Print (Literal 1 `Plus` Literal 1)
+example1 = Print (Literal 1)
 
-example2 = Print (Literal 1) `Seq` Print (Literal 1 `Plus` Literal 1)
+example2 = Print (Literal 1) `Seq` Print (Literal 2 `Plus` Literal 3)
 
 example3 = NoOp
 

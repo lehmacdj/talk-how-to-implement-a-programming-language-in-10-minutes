@@ -23,7 +23,8 @@ data Command
   | Seq Command Command
   | NoOp
   | Assign String AExp
-  | IfNez AExp Command Command
+  | -- if 1 then print 2 else print 3
+    IfNez AExp Command Command
 
 evaluateAExp :: Map String Integer -> AExp -> Integer
 evaluateAExp env (Literal n) = n
@@ -49,7 +50,7 @@ evaluate env (Assign x n) = do
 evaluate env (IfNez n p q) = do
   currentEnv <- readIORef env
   let result = evaluateAExp currentEnv n
-  if result == 0
+  if result /= 0
     then evaluate env p
     else evaluate env q
 
@@ -66,23 +67,13 @@ example1 =
     (Print (Literal 42))
 
 example2 =
-  Assign "x" (Literal 0) `Seq`
+  Assign "x" (Literal 1) `Seq`
   IfNez (Variable "x")
     (Print (Literal 42))
   -- else
     NoOp
 
-example3 =
-  Assign "x" (Literal 2) `Seq`
-  IfNez (Variable "x")
-    (Print (Literal 42))
-  -- else
-    NoOp `Seq`
-  Print (Variable "x")
-{- ORMOLU_ENABLE -}
-
 main :: IO ()
 main = do
   run example1
   run example2
-  run example3

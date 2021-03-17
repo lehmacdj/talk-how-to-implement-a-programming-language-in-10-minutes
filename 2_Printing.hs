@@ -6,28 +6,28 @@
 
 module Main where
 
-data AExp
+data Expression
   = Literal Integer
-  | Plus AExp AExp
-  | Minus AExp AExp
-  | Times AExp AExp
+  | Plus Expression Expression
+  | Minus Expression Expression
+  | Times Expression Expression
 
 data Command
   = -- | print (1 + 1)
-    Print AExp
+    Print Expression
   | -- | print 1; print 2
     Seq Command Command
   | -- | nop
     NoOp
 
-evaluateAExp :: AExp -> Integer
-evaluateAExp (Literal n) = n
-evaluateAExp (Plus n m) = evaluateAExp n + evaluateAExp m
-evaluateAExp (Minus n m) = evaluateAExp n - evaluateAExp m
-evaluateAExp (Times n m) = evaluateAExp n * evaluateAExp m
+evaluateExpression :: Expression -> Integer
+evaluateExpression (Literal n) = n
+evaluateExpression (Plus n m) = evaluateExpression n + evaluateExpression m
+evaluateExpression (Minus n m) = evaluateExpression n - evaluateExpression m
+evaluateExpression (Times n m) = evaluateExpression n * evaluateExpression m
 
 evaluate :: Command -> IO ()
-evaluate (Print n) = print (evaluateAExp n)
+evaluate (Print n) = print (evaluateExpression n)
 evaluate (Seq p q) = do
   evaluate p
   evaluate q

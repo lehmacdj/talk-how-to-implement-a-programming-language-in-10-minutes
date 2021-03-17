@@ -11,42 +11,42 @@ import Data.IORef
 import Data.Map (Map)
 import qualified Data.Map as Map
 
-data AExp
+data Expression
   = Literal Integer
   | Variable String
-  | Plus AExp AExp
-  | Minus AExp AExp
-  | Times AExp AExp
+  | Plus Expression Expression
+  | Minus Expression Expression
+  | Times Expression Expression
 
 data Command
-  = Print AExp
+  = Print Expression
   | Seq Command Command
   | NoOp
   | -- | x := 1
-    Assign String AExp
+    Assign String Expression
 
-evaluateAExp :: Map String Integer -> AExp -> Integer
-evaluateAExp env (Literal n) = n
-evaluateAExp env (Variable x) =
+evaluateExpression :: Map String Integer -> Expression -> Integer
+evaluateExpression env (Literal n) = n
+evaluateExpression env (Variable x) =
   case Map.lookup x env of
     Just v -> v
     Nothing -> 0
-evaluateAExp env (Plus n m) = evaluateAExp env n + evaluateAExp env m
-evaluateAExp env (Minus n m) = evaluateAExp env n - evaluateAExp env m
-evaluateAExp env (Times n m) = evaluateAExp env n * evaluateAExp env m
+evaluateExpression env (Plus n m) = evaluateExpression env n + evaluateExpression env m
+evaluateExpression env (Minus n m) = evaluateExpression env n - evaluateExpression env m
+evaluateExpression env (Times n m) = evaluateExpression env n * evaluateExpression env m
 
 evaluate :: IORef (Map String Integer) -> Command -> IO ()
 evaluate env (Print n) = do
   currentEnv <- readIORef env
-  print (evaluateAExp currentEnv n)
+  print (evaluateExpression currentEnv n)
 evaluate env (Seq p q) = do
   evaluate env p
   evaluate env q
 evaluate env NoOp = pure ()
 evaluate env (Assign x n) = do
   currentEnv <- readIORef env
-  -- env[x] = evaluateAExp currentEnv n
-  writeIORef env (Map.insert x (evaluateAExp currentEnv n) currentEnv)
+  -- env[x] = evaluateExpression currentEnv n
+  writeIORef env (Map.insert x (evaluateExpression currentEnv n) currentEnv)
 
 example1 = Print (Variable "x")
 

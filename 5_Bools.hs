@@ -11,63 +11,63 @@ import Data.IORef
 import Data.Map (Map)
 import qualified Data.Map as Map
 
-data AExp
+data Expression
   = Literal Integer
   | Variable String
-  | Plus AExp AExp
-  | Minus AExp AExp
-  | Times AExp AExp
+  | Plus Expression Expression
+  | Minus Expression Expression
+  | Times Expression Expression
   | -- boolean operations consider numbers != 0 to be true and 0 to be false
     -- similarly to C coercion rules. This allows them to be used with IfNez
     -- easily / intuitively.
     -- we could easily add more like &&, ||, <=, >, <, !=
-    Not AExp
-  | Eq AExp AExp
-  | Ge AExp AExp
+    Not Expression
+  | Eq Expression Expression
+  | Ge Expression Expression
 
 data Command
-  = Print AExp
+  = Print Expression
   | Seq Command Command
   | NoOp
-  | Assign String AExp
-  | IfNez AExp Command Command
+  | Assign String Expression
+  | IfNez Expression Command Command
 
-evaluateAExp :: Map String Integer -> AExp -> Integer
-evaluateAExp env (Literal n) = n
-evaluateAExp env (Variable x) =
+evaluateExpression :: Map String Integer -> Expression -> Integer
+evaluateExpression env (Literal n) = n
+evaluateExpression env (Variable x) =
   case Map.lookup x env of
     Just v -> v
     Nothing -> 0
-evaluateAExp env (Plus n m) = evaluateAExp env n + evaluateAExp env m
-evaluateAExp env (Minus n m) = evaluateAExp env n - evaluateAExp env m
-evaluateAExp env (Times n m) = evaluateAExp env n * evaluateAExp env m
-evaluateAExp env (Not n) =
-  if evaluateAExp env n /= 0
+evaluateExpression env (Plus n m) = evaluateExpression env n + evaluateExpression env m
+evaluateExpression env (Minus n m) = evaluateExpression env n - evaluateExpression env m
+evaluateExpression env (Times n m) = evaluateExpression env n * evaluateExpression env m
+evaluateExpression env (Not n) =
+  if evaluateExpression env n /= 0
     then 0
     else 1
-evaluateAExp env (Eq n m) =
-  if evaluateAExp env n == evaluateAExp env m
+evaluateExpression env (Eq n m) =
+  if evaluateExpression env n == evaluateExpression env m
     then 1
     else 0
-evaluateAExp env (Ge n m) =
-  if evaluateAExp env n >= evaluateAExp env m
+evaluateExpression env (Ge n m) =
+  if evaluateExpression env n >= evaluateExpression env m
     then 1
     else 0
 
 evaluate :: IORef (Map String Integer) -> Command -> IO ()
 evaluate env (Print n) = do
   currentEnv <- readIORef env
-  print (evaluateAExp currentEnv n)
+  print (evaluateExpression currentEnv n)
 evaluate env (Seq p q) = do
   evaluate env p
   evaluate env q
 evaluate env NoOp = pure ()
 evaluate env (Assign x n) = do
   currentEnv <- readIORef env
-  writeIORef env (Map.insert x (evaluateAExp currentEnv n) currentEnv)
+  writeIORef env (Map.insert x (evaluateExpression currentEnv n) currentEnv)
 evaluate env (IfNez n p q) = do
   currentEnv <- readIORef env
-  let result = evaluateAExp currentEnv n
+  let result = evaluateExpression currentEnv n
   if result /= 0
     then evaluate env p
     else evaluate env q

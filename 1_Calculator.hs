@@ -6,22 +6,22 @@
 
 module Main where
 
-data AExp
+data Expression
   = Literal Integer
-  | Plus AExp AExp
-  | Minus AExp AExp
-  | Times AExp AExp
+  | Plus Expression Expression
+  | Minus Expression Expression
+  | Times Expression Expression
 
-evaluateAExp :: AExp -> Integer
-evaluateAExp (Literal n) = n
-evaluateAExp (Plus n m) = evaluateAExp n + evaluateAExp m
-evaluateAExp (Minus n m) = evaluateAExp n - evaluateAExp m
-evaluateAExp (Times n m) = evaluateAExp n * evaluateAExp m
+evaluateExpression :: Expression -> Integer
+evaluateExpression (Literal n) = n
+evaluateExpression (Plus n m) = evaluateExpression n + evaluateExpression m
+evaluateExpression (Minus n m) = evaluateExpression n - evaluateExpression m
+evaluateExpression (Times n m) = evaluateExpression n * evaluateExpression m
 
 example1 = Literal 1 `Plus` (Literal 2 `Times` (Literal 3 `Plus` Literal 4))
 
 example2 = Plus (Literal 1) (Times (Literal 2) (Plus (Literal 3) (Literal 4)))
 
 main = do
-  print (evaluateAExp example1)
-  print (evaluateAExp example2)
+  print (evaluateExpression example1)
+  print (evaluateExpression example2)

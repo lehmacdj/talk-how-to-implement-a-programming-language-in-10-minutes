@@ -4,6 +4,7 @@
 \usepackage{color}
 \usepackage{amsmath}
 \usepackage{qtree}
+\usepackage{multicol}
 
 \renewcommand\lstlistingname{Quelltext} % Change language of section name
 \lstset{% General setup for the package
@@ -82,13 +83,30 @@ print n
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Demo Outline}
+\begin{frame}[fragile]{Demo Outline}
   \begin{itemize}
-    \item Printing + Basic command stuff
-      \Tree [.{Seq} [.{Print} 1 ] [.{Print} [.{+} 2 3 ] ] ]
+    \item
+      \begin{multicols}{2}
+        Printing + Basic command stuff
+\begin{verbatim}
+print 1;
+print (2 + 3)
+\end{verbatim}
+      \columnbreak{}
+        \Tree [.{Seq} [.{Print} 1 ] [.{Print} [.{+} 2 3 ] ] ]
+      \end{multicols}
     \item Assignment
-    \item Conditionals (e.g.\ if)
-      \Tree [.{IfNez} 1 [.{Print} 42 ] [.{Print} 0 ] ]
+    \item
+      \begin{multicols}{2}
+        Conditionals (e.g.\ if)
+\begin{verbatim}
+if 1
+then print 42
+else print 0
+\end{verbatim}
+      \columnbreak{}
+        \Tree [.{IfNez} 1 [.{Print} 42 ] [.{Print} 0 ] ]
+      \end{multicols}
     \item While
   \end{itemize}
 \end{frame}

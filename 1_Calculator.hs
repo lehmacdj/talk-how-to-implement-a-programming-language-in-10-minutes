@@ -1,7 +1,7 @@
 #!/usr/bin/env stack
 {- stack
     ghci
-    --resolver lts-17.4
+    --resolver lts-16.6
  -}
 
 module Main where

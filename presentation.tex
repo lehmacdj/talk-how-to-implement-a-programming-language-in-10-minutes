@@ -44,8 +44,8 @@
       (e.g.\ what makes a good programming language) and implementation (e.g.\
       how is Rosalyn the C\# compiler written)
     \item Language design opens possibilities
-    \item There are things that just aren't possible without writing a new
-      language
+    \item Helps you think outside of the box when solving problems
+    % some things can only be done by implementing a new programming language
   \end{itemize}
 \end{frame}
 
@@ -75,20 +75,20 @@ print n
         \text{Source Code} \xrightarrow{\text{Parser}} \text{AST} \xrightarrow{\text{Interpreter}} \text{Program Output}
       \end{align*}
     \item<2-> Only going to implement an interpreter; so we'll start with Abstract Syntax Trees (ASTs)
-    \item<2-> An expression like $1 + 2 * (1 + 2)$ would be represented as this AST:\\
-      \Tree [.{+} 1 [.{*} 2 [.{+} 1 2 ] ] ]
+    \item<2-> An expression like $1 + 2 * (3 + 4)$ would be represented as this AST:\\
+      \Tree [.{+} 1 [.{*} 2 [.{+} 3 4 ] ] ]
     % at this point will want to overview Haskell + show the implementation of
     % the calculator
   \end{itemize}
 \end{frame}
 
-\begin{frame}{Printing + Basic Commands}
-\end{frame}
-
-\begin{frame}{Assignment}
-\end{frame}
-
-\begin{frame}{Conditionals}
+\begin{frame}{Demo Outline}
+  \begin{itemize}
+    \item Printing + Basic command stuff
+    \item Assignment
+    \item Conditionals (e.g.\ if)
+    \item While
+  \end{itemize}
 \end{frame}
 
 \begin{frame}{That's all!}

@@ -61,17 +61,17 @@ run c = do
 
 {- ORMOLU_DISABLE -}
 example1 =
-  IfNez (Variable "x")
-    (Print (Literal 0))
-  -- else
+  IfNez (Literal 1)
     (Print (Literal 42))
+  -- else
+    (Print (Literal 0))
 
 example2 =
   Assign "x" (Literal 1) `Seq`
   IfNez (Variable "x")
-    (Print (Literal 42))
-  -- else
     NoOp
+  -- else
+    (Print (Literal 666))
 
 main :: IO ()
 main = do
